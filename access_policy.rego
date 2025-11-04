@@ -39,10 +39,38 @@ allow if {
 
 allow if {
 	input.method == "PUT"
+
+	[resource, car_id] := input.path
+	resource == "cars"
+
+	user_is_manager
+}
+
+allow if {
 	input.method == "DELETE"
 
 	[resource, car_id] := input.path
 	resource == "cars"
 
 	user_is_manager
+}
+
+allow if {
+	input.method == "GET"
+
+	[resource, car_id, status] := input.path
+	resource == "cars"
+	status == "status"
+
+	user_is_employee
+}
+
+allow if {
+	input.method == "POST"
+
+	[resource, car_id, status] := input.path
+	resource == "cars"
+	status == "status"
+
+	user_is_employee
 }
